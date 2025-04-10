@@ -187,13 +187,21 @@ header{
 }
 .image-container{
     position: relative;
+    display: flex;
+    flex-direction: row;
     right: 100px;
     z-index: -1;
     max-width: 1000px;
+    height: max-content;
+    transition: transform 0.5s ease-in-out;
+}
+.sidebar{
+    transition: transform 1s ease-in-out;
 }
 .slide-image{
     width: auto;
 }
+
 .project-handler .text{
     margin-top: 50px;
     color: white;

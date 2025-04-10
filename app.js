@@ -9,7 +9,7 @@ function scrollToSection(index) {
 
         window.scrollTo({
             top: sections[index].offsetTop,
-            behavior: 'smooth' // Отключаем плавную прокрутку
+            behavior: 'smooth'
         });
 
         currentSectionIndex = index;
