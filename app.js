@@ -1,47 +1,139 @@
+const slides = [
+    {
+        title: "CYBERPUNK CRY",
+        description: "Dynamic TPS-game in cyberpunk setting Futuristic graphics combined with thrilling combats and anime style",
+        link: "./error.html"
+    },
+    {
+        title: "JINX",
+        description: "New animated serial about one heroine of serial Arcane It tells about Jinx’s life after first part of her story",
+        link: "https://www.netflix.com/title/81435684"
+    },
+    {
+        title: "SHARDS OF ETERNITY",
+        description: "3D dark fantasy game with horror elements about Asian girl who can use magic",
+        link: "./error.html"
+    }
+];
+
+const sidebar = document.querySelector('.sidebar')
+const mainSlide = document.querySelector('.image-container')
+const slideTitle = document.querySelector(".slide-title")
+const slideDesc = document.querySelector(".slide-description")
+const slideLink = document.querySelector(".links")
+
+let activeSlideIndex = 0
+let isScrollingSlidebar = false;
+
+const slidesCount = mainSlide.querySelectorAll('img').length
+
 const sections = document.querySelectorAll('.content');
 const header = document.querySelector('header');
 let currentSectionIndex = 0;
 let isScrolling = false; // Флаг для блокировки повторных событий
 
-function scrollToSection(index) {
-    if (index >= 0 && index < sections.length && !isScrolling) {
-        isScrolling = true; // Блокируем новые события прокрутки
-
-        window.scrollTo({
-            top: sections[index].offsetTop,
-            behavior: 'smooth' // Отключаем плавную прокрутку
-        });
-
-        currentSectionIndex = index;
-
-        setTimeout(() => {
-            isScrolling = false;
-        }, 500); // Задержка равна длительности анимации
-    }
-}
-
 window.addEventListener('wheel', (event) => {
-    if (event.deltaY > 0) {
-        // Прокрутка вниз
-        scrollToSection(currentSectionIndex + 1);
-        hideShowHeader(currentSectionIndex);
-    } else if(event.deltaY < 0) {
-        // Прокрутка вверх
-        scrollToSection(currentSectionIndex - 1);
-        hideShowHeader(currentSectionIndex);
+    if(isScrolling === false){
+        if (event.deltaY > 0) {
+            // Прокрутка вниз
+            scrollToSection('up');
+            hideShowHeader(currentSectionIndex);
+        } else if(event.deltaY < 0) {
+            // Прокрутка вверх
+            scrollToSection('down');
+            hideShowHeader(currentSectionIndex);
+        }
+    }  
+    if(isScrollingSlidebar === false && currentSectionIndex === 3){
+        if(event.deltaY > 0){
+            console.log("up")
+            changeSlide('up')
+        } else if(event.deltaY < 0) {
+            console.log("up")
+            changeSlide('down')
+        }
     }
+    setTimeout(() => {
+        isScrolling = false;
+        isScrollingSlidebar = false;
+    }, 500);
+    
+
 });
 
 // Добавляем поддержку клавиш
 window.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowDown') {
-        scrollToSection(currentSectionIndex + 1);
-        hideShowHeader(currentSectionIndex);
-    } else if (event.key === 'ArrowUp') {
-        scrollToSection(currentSectionIndex - 1);
-        hideShowHeader(currentSectionIndex);
+    if(isScrolling === false){
+        if (event.key === 'ArrowDown') {
+            scrollToSection(currentSectionIndex + 1);
+            hideShowHeader(currentSectionIndex);
+        } else if (event.key === 'ArrowUp') {
+            scrollToSection(currentSectionIndex - 1);
+            hideShowHeader(currentSectionIndex);
+        }
     }
+    if(isScrollingSlidebar === false && currentSectionIndex === 3){    
+        if(event.key === 'ArrowUp'){
+            changeSlide('up')
+
+        } else if(event.key === 'ArrowDown'){
+            changeSlide('down')
+        }
+    }
+
+    setTimeout(() => {
+        isScrolling = false;
+        isScrollingSlidebar = false;
+    }, 500);
 });
+
+function scrollToSection(direction) {
+    isScrolling = true; // Блокируем новые события прокрутки
+
+    if(direction === "up"){
+
+        if(currentSectionIndex === 3){
+
+            if(activeSlideIndex === slidesCount - 1){
+                ++currentSectionIndex;
+                isScrolling = true;
+                isScrollingSlidebar = true;
+            } else{
+                currentSectionIndex === 3;
+            }
+
+        } else{
+            ++currentSectionIndex
+            isScrolling = true;
+            isScrollingSlidebar = true;
+        }
+
+        if(currentSectionIndex === sections.length){
+            currentSectionIndex = sections.length - 1;
+        }
+    } else if(direction === "down"){
+
+        if(currentSectionIndex === 3){
+
+            if(activeSlideIndex === 0){
+                currentSectionIndex--;
+            } else{
+                currentSectionIndex === 3;
+            }
+
+        } else{
+            currentSectionIndex--
+        }
+
+        if(currentSectionIndex < 0){
+            currentSectionIndex = 0;
+        }
+    }
+    window.scrollTo({
+        top: sections[currentSectionIndex].offsetTop,
+        behavior: 'smooth'
+    }); // Задержка равна длительности анимации
+}
 
 function hideShowHeader(index){
     if(index >= 3){
@@ -50,6 +142,32 @@ function hideShowHeader(index){
     else{
         header.style.visibility = "visible"
     }
+}
+
+function changeSlide(direction){
+    isScrollingSlidebar = true;
+    
+    if(direction === 'up'){
+        activeSlideIndex++
+
+        if(activeSlideIndex === slidesCount){
+            activeSlideIndex = slidesCount - 1
+        }
+    } else if (direction === 'down'){
+        activeSlideIndex--
+
+        if(activeSlideIndex < 0){
+            activeSlideIndex = 0;
+        }
+    }
+    const width = mainSlide.clientWidth
+    mainSlide.style.transform = `translateX(-${activeSlideIndex * width}px)`
+    changeText(activeSlideIndex);
+}
+function changeText(index){
+    slideTitle.textContent = slides[index].title;
+    slideDesc.textContent = slides[index].description;
+    slideLink.href = slides[index].link;
 }
 
 
