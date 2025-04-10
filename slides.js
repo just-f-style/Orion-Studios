@@ -29,7 +29,7 @@ let isScrollingSlidebar = false;
 const slidesCount = mainSlide.querySelectorAll('img').length
 
 window.addEventListener("wheel", (event) =>{
-    if(isScrollingSidebar === false){
+    if(isScrollingSlidebar === false){
         isScrollingSlidebar = true;
 
         if(event.deltaY > 0){
@@ -38,7 +38,7 @@ window.addEventListener("wheel", (event) =>{
             changeSlide('down')
         }
         setTimeout(() =>{
-            isScrollingSidebar = false;
+            isScrollingSlidebar = false;
         }, 500)
     }
 })
@@ -53,7 +53,7 @@ document.addEventListener('keydown', event =>{
             changeSlide('down')
         }
         setTimeout(() =>{
-            isScrollingSidebar = false;
+            isScrollingSlidebar = false;
         }, 500)
     }
 })
