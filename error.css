@@ -8,6 +8,7 @@
     height: auto;
     width: 100%;
     scrollbar-width: 0;
+    user-select: none;
 }
 body{
     height: 100vh;

@@ -95,7 +95,7 @@ function scrollToSection(direction) {
         if(currentSectionIndex === 3){
 
             if(activeSlideIndex === slidesCount - 1){
-                ++currentSectionIndex;
+                currentSectionIndex++;
                 isScrolling = true;
                 isScrollingSlidebar = true;
             } else{
@@ -103,7 +103,7 @@ function scrollToSection(direction) {
             }
 
         } else{
-            ++currentSectionIndex
+            currentSectionIndex++
             isScrolling = true;
             isScrollingSlidebar = true;
         }
@@ -117,12 +117,16 @@ function scrollToSection(direction) {
 
             if(activeSlideIndex === 0){
                 currentSectionIndex--;
+                isScrolling = true;
+                isScrollingSlidebar = true;
             } else{
                 currentSectionIndex === 3;
             }
 
         } else{
             currentSectionIndex--
+            isScrolling = true;
+            isScrollingSlidebar = true;
         }
 
         if(currentSectionIndex < 0){
@@ -169,7 +173,35 @@ function changeText(index){
     slideDesc.textContent = slides[index].description;
     slideLink.href = slides[index].link;
 }
+const form = document.querySelector('form');
+const fnameInput = document.querySelector('.fname');
+const lnameInput = document.querySelector('.lname');
+const msgInput = document.querySelector('.msg');
+const submitBtn = document.querySelector('.submit-btn');
 
-
-        
-   
+function checkForm(){
+    if( 
+        fnameInput.value == '' ||
+        lnameInput.value == '' ||
+        msgInput.value == ''
+    ){
+        submitBtn.disabled = true;
+    } else{
+        submitBtn.disabled = false;
+    }
+}
+form.addEventListener('input', checkForm)
+form.addEventListener('submit', function (e){
+    e.preventDefault;
+    const formData = new FormData(this);
+    fetch('/submit', {
+        method: 'POST',
+        body: formData
+    }).then(response =>{
+        open('./submit.html');
+        this.reset();
+        submitBtn.disabled = true;
+    }).catch(error => {
+        console.error('Ошибка: ', error);
+    });
+});

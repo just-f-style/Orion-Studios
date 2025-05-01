@@ -22,6 +22,7 @@ body{
     height: auto;
     width: 100%;
     scrollbar-width: 0;
+    user-select: none;
 }
 .content{
     background-size: cover;
@@ -165,7 +166,7 @@ header{
 .garanties{
     background-image: url(./Images/Desktop\ Garanties\ Sector\ Background\ Chrome.png);
 }
-.projects{
+.projects, .contacts{
     justify-content: unset;
     align-items: unset;
     flex-direction: row;
@@ -179,6 +180,7 @@ header{
     max-width: 1020px;
     background-image: url(./Images/Desktop\ Projects\ Sector\ Background\ Chrome.svg);
     background-size: contain;
+    background-repeat: no-repeat;
 }
 .contant-container{
     position: relative;
@@ -230,7 +232,7 @@ header{
     max-width: 200px;
     max-height: 80px;
 }
-.footer .links{
+.projects .footer .links{
     display: flex;
     margin-left: 158px;
     max-width: 410px;
@@ -241,4 +243,88 @@ header{
     font-family: IntroFriday;
     font-size: 40px;
     background-image: url(./Images/Links\ Button\ Background.svg);
+}
+.contacts p{
+    max-width: 510px;
+}
+.form-container{
+    background: url(./Images/contact-form-bg.png) no-repeat;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    right: 100px;
+    min-height: 991px;
+    min-width: 1000px;
+    height: max-content;
+    width: max-content;
+}
+#contacts{
+    background-color: black;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    place-items: center;
+}
+input, textarea, button[type=submit]{
+    position: relative;
+    color: #4F86FF;
+    margin-top: 50px;
+    font-family: Intro Friday;
+    font-size: 40px;
+    border: none;
+    padding: 0 50px;
+    outline: none;
+    transition: background-image 300ms ease-out;
+    background: transparent url(./Images/fields-bg.png) no-repeat;
+    background-size:cover;
+    max-width: 610px;
+    min-height: 100px;
+}
+textarea{
+    background: transparent url(./Images/Message\ field.png) no-repeat;
+    min-height: 250px;
+    max-width: 590px;
+    resize: none;
+    padding: 25px 71px;
+}
+button[type=submit]{
+    background: transparent url(./Images/submit-btn.svg) no-repeat;
+    padding: unset;
+    color: black;
+    max-width: 710px;
+    position: relative;
+    right: 20px;
+    opacity: 0.5;
+    cursor: not-allowed;
+    transition: opacity 300ms ease-out;
+}
+button[type=submit]:not([disabled]){
+    opacity: 1;
+    cursor: pointer;
+}
+textarea::placeholder, input::placeholder{
+    position: relative;
+    color: white;
+    font-family: Intro Friday;
+    font-size: 40px;
+    transition: color 300ms ease-out;
+}
+input:focus::placeholder, textarea:focus::placeholder{
+    color: var(--index-color);
+    
+}
+input:focus{
+    background-image: url(./Images/fields-active-bg.png);
+}
+textarea:focus{
+    background-image: url(./Images/Message\ field\ active.png);
+}
+input:nth-child(1){
+    left: 35.75px;
+}
+input:nth-child(2){
+    left: 19.25px;
 }
