@@ -15,7 +15,12 @@ const slides = [
         link: "./error.html"
     }
 ];
-
+if('scrollRestoration' in history){
+    history.scrollRestoration = 'manual';
+}
+setTimeout(() =>{
+    window.scrollTo(0, 0);
+}, 0);
 const sidebar = document.querySelector('.sidebar')
 const mainSlide = document.querySelector('.image-container')
 const slideTitle = document.querySelector(".slide-title")
@@ -30,8 +35,42 @@ const slidesCount = mainSlide.querySelectorAll('img').length
 const sections = document.querySelectorAll('.content');
 const header = document.querySelector('header');
 let currentSectionIndex = 0;
+
 let isScrolling = false; // Флаг для блокировки повторных событий
 
+const loadingText = document.querySelector('.preloader-text');
+
+let dots = 1;
+const maxDots = 3;
+
+setInterval(() => {
+  dots = (dots % maxDots) + 1; // Цикл от 1 до 3
+
+  let text = 'Loading';
+  for (let i = 0; i < dots; i++) {
+    text += '.';
+  }
+
+  loadingText.textContent = text;
+}, 500);
+let randomTime = Math.random();
+window.addEventListener('load', function (){
+    this.setInterval(() => {
+        
+        const preloader = document.getElementById('preloader');
+    
+        // Останавливаем анимацию точек
+        clearInterval(window.loadingDotsInterval);
+      
+        // Плавное скрытие
+        preloader.classList.add('hide');
+      
+        setTimeout(() => {
+          preloader.remove();
+        }, 800);
+    }, Math.round(randomTime * 3000))
+  });
+  console.log(Math.round(randomTime * 3000));
 window.addEventListener('wheel', (event) => {
     if(isScrolling === false){
         if (event.deltaY > 0) {
@@ -89,7 +128,6 @@ window.addEventListener('keydown', (event) => {
 
 function scrollToSection(direction) {
     isScrolling = true; // Блокируем новые события прокрутки
-
     if(direction === "up"){
 
         if(currentSectionIndex === 3){
@@ -198,7 +236,7 @@ form.addEventListener('submit', function (e){
         method: 'POST',
         body: formData
     }).then(response =>{
-        open('./submit.html');
+        window.location.href = "./submit.html"
         this.reset();
         submitBtn.disabled = true;
     }).catch(error => {
