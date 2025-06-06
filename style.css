@@ -177,7 +177,7 @@ header{
     background-repeat: no-repeat;
     background-image: url(./Images/1920x911/background-graphic-1920-911.png);
 }
-.graphic .text, .garanties .text{
+.graphic .text, .guarantees .text{
     position: relative;
     left: 100px;
     max-width: 750px;
@@ -210,7 +210,7 @@ header{
 .desc div:not(:first-child, .punct, .decor){
     margin-top: 40px;
 }
-.garanties{
+.guarantees{
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
